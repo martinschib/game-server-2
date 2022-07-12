@@ -20,24 +20,18 @@
   "author": "Hugo Di Francesco",
   "license": "MIT",
   "dependencies": {
-    "bcrypt": "^5.0.1",
-    "client-sessions": "^0.8.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "helmet": "^4.6.0",
     "migrate": "^1.7.0",
     "morgan": "^1.10.0",
     "pg": "^8.7.1",
-    "sql-template-strings": "^2.2.2",
-    "uuid": "^8.3.2"
+    "sql-template-strings": "^2.2.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.12",
-    "xo": "^0.36.1"
+    "nodemon": "^2.0.12"
   },
-  "xo": {
-    "prettier": true,
-    "space": true
-  },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HugoDF/express-postgres-starter.git"

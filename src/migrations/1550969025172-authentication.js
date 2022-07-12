@@ -1,25 +1,20 @@
-const db = require('../persistence/db');
+const db = require("../persistence/db");
 
 module.exports.up = async function (next) {
   const client = await db.connect();
 
   await client.query(`
-  CREATE TABLE IF NOT EXISTS users (
-    id uuid PRIMARY KEY,
-    email text UNIQUE,
-    password text
-  );
-
-  CREATE TABLE IF NOT EXISTS sessions (
-    id uuid PRIMARY KEY,
-    user_id uuid REFERENCES users (id) ON DELETE CASCADE
+  CREATE TABLE IF NOT EXISTS wordnetts (
+    id SERIAL PRIMARY KEY,
+    created_at timestamp default now(),
+    wordnett text,
+    solutions text[],
+    max_points INT NOT NULL
   );
   `);
 
   await client.query(`
-  CREATE INDEX users_email on users (email);
-
-  CREATE INDEX sessions_user on sessions (user_id);
+  CREATE INDEX wordnetts_id on wordnetts (id);
   `);
 
   await client.release(true);
@@ -30,8 +25,7 @@ module.exports.down = async function (next) {
   const client = await db.connect();
 
   await client.query(`
-  DROP TABLE sessions;
-  DROP TABLE users;
+  DROP TABLE wordnetts;
   `);
 
   await client.release(true);
