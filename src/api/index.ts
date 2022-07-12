@@ -7,4 +7,4 @@ const wordnett = require("./wordnett");
 
 router.use("/api/wordnett", wordnett);
 
-module.exports = router;
+export default router;

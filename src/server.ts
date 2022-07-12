@@ -1,11 +1,10 @@
-const express = require('express');
-
-const morgan = require('morgan');
-const helmet = require('helmet');
-const cors = require('cors');
+import express, { Application } from "express";
+import morgan from "morgan"
+import helmet from "helmet"
+import cors from "cors"
+import api from "./api"
 
 const app = express();
-const api = require('./src/api');
 
 app.get('/', (request, response) => response.sendStatus(200));
 app.get('/health', (request, response) => response.sendStatus(200));
@@ -15,14 +14,13 @@ app.use(express.json());
 
 // Implement CORS
 app.use(cors());
-app.options('*', cors());
 
 app.use(helmet());
 
 app.use(api);
 
 let server;
-module.exports = {
+export default {
   start(port) {
     server = app.listen(port, () => {
       console.log(`App started on port ${port}`);

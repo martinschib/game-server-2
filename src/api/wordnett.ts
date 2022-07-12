@@ -1,28 +1,30 @@
-const { Router } = require("express");
-const authenticationMiddleware = require("../middleware/authentication");
-const Wordnetts = require("../persistence/wordnetts");
-const { getMaxPoints } = require("../utils/word");
+import express from "express";
+import { authenticationMiddleware } from "../middleware/authentication";
+import Wordnett, { WordnettType } from "../persistence/wordnetts";
+import { getMaxPoints } from "../utils/word";
 
-const router = new Router();
+const router = express.Router();
 
 router.post("/", authenticationMiddleware, async (request, response) => {
   try {
-    const { wordnett, solutions } = request.body;
+    const { wordnett, solutions }: { wordnett: string; solutions: string[] } =
+      request.body;
+
     if (!wordnett || !solutions) {
       return response.status(400).json({
         message: "wordnett and solutions must be provided",
       });
     }
 
-    const wordnett_id = await Wordnetts.create(
+    const wordnettId = await Wordnett.create(
       wordnett,
       getMaxPoints(solutions),
       solutions
     );
 
-    return response.status(200).json(wordnett_id);
+    return response.status(200).json(wordnettId);
   } catch (error) {
-    console.error(`somthing went wrong ${error}`);
+    console.error(`something went wrong ${error}`);
     response.status(500).json();
   }
 });
@@ -36,7 +38,7 @@ router.get("/", async (request, response) => {
         .json({ message: "A valid id must be provided" });
     }
 
-    const wordnett = await Wordnetts.find(id);
+    const wordnett = await Wordnett.find(id);
     if (!wordnett) {
       return response
         .status(400)
@@ -48,11 +50,11 @@ router.get("/", async (request, response) => {
       solutions: wordnett.solutions,
       max_points: wordnett.max_points,
       max_words: wordnett.solutions.length,
-    });
+    } as Omit<WordnettType, "id" | "createdAt">);
   } catch (error) {
-    console.error(`somthing went wrong ${error}`);
+    console.error(`something went wrong ${error}`);
     response.status(500).json();
   }
 });
 
-module.exports = router;
+export default router;

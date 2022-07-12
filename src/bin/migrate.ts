@@ -1,7 +1,6 @@
-const path = require('path');
-const migrate = require('migrate');
-
-const stateStore = require('../src/persistence/postgres-state-storage');
+import path from "path"
+import migrate from "migrate"
+import stateStore from "../persistence/postgres-state-storage"
 
 const migrationsDirectory = path.resolve(__dirname, '../src/migrations');
 
@@ -24,7 +23,7 @@ new Promise((resolve, reject) => {
 
       set[command]((err) => {
         if (err) reject(err);
-        resolve();
+        resolve(0);
       });
     }
   );
