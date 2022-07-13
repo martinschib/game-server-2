@@ -9,7 +9,8 @@
     "migrate:create": "migrate create --migrations-dir='./src/migrations'",
     "dev": "esbuild",
     "build": "etsc",
-    "start": "node dist/bin/server.js"
+    "start": "node dist/bin/server.js",
+    "format": "prettier --write ."
   },
   "keywords": [
     "express",
@@ -33,7 +34,8 @@
     "@types/pg": "^8.6.5",
     "esbuild": "^0.14.49",
     "esbuild-node-tsc": "^1.8.6",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "prettier": "2.7.1"
   },
   "repository": {
     "type": "git",

@@ -1,15 +1,15 @@
 import express from "express";
-import morgan from "morgan"
-import helmet from "helmet"
-import cors from "cors"
-import api from "./api"
+import morgan from "morgan";
+import helmet from "helmet";
+import cors from "cors";
+import api from "./api";
 
 const app = express();
 
-app.get('/', (request, response) => response.sendStatus(200));
-app.get('/health', (request, response) => response.sendStatus(200));
+app.get("/", (request, response) => response.sendStatus(200));
+app.get("/health", (request, response) => response.sendStatus(200));
 
-app.use(morgan('short'));
+app.use(morgan("short"));
 app.use(express.json());
 
 // Implement CORS
@@ -29,5 +29,5 @@ export default {
   },
   stop() {
     server.close();
-  }
+  },
 };

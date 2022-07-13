@@ -2,7 +2,7 @@ import express from "express";
 
 const router = express.Router();
 
-import wordnett from "./wordnett"
+import wordnett from "./wordnett";
 
 router.use("/api/wordnett", wordnett);
 

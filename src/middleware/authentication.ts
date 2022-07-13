@@ -1,6 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 
-export const authenticationMiddleware = async (request: Request, response: Response, next: NextFunction) => {
+export const authenticationMiddleware = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
   const userId = request.headers["userid"];
 
   if (typeof userId !== "string") {
