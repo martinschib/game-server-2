@@ -19,15 +19,6 @@ app.use(helmet());
 
 app.use(api);
 
-let server;
-export default {
-  start(port) {
-    server = app.listen(port, () => {
-      console.log(`App started on port ${port}`);
-    });
-    return app;
-  },
-  stop() {
-    server.close();
-  },
-};
+app.listen(process.env.PORT || 3001, () => {
+  console.log(`App started on port ${process.env.PORT || 3001}`);
+});

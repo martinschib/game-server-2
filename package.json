@@ -3,14 +3,14 @@
   "private": true,
   "version": "1.0.0",
   "description": "Starter project using Express and Postgres",
-  "main": "config.js",
   "scripts": {
     "migrate": "node ./src/bin/migrate.js",
     "migrate:create": "migrate create --migrations-dir='./src/migrations'",
-    "dev": "esbuild",
-    "build": "etsc",
-    "start": "node dist/bin/server.js",
-    "format": "prettier --write ."
+    "dev": "nodemon --exec 'npm run build:dev && npm run start'",
+    "format": "prettier --write .",
+    "start": "node built/index.js",
+    "build:dev": "esbuild ./src/server.ts --platform=node --bundle --minify --outfile=built/index.js --watch",
+    "build:prod": "esbuild ./src/server.ts --platform=node --bundle --minify --outfile=built/index.js"
   },
   "keywords": [
     "express",
@@ -25,6 +25,7 @@
     "migrate": "^1.7.0",
     "morgan": "^1.10.0",
     "pg": "^8.7.1",
+    "pg-native": "^3.0.0",
     "sql-template-strings": "^2.2.2"
   },
   "devDependencies": {
