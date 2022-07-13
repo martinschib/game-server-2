@@ -46,11 +46,12 @@ router.get("/", async (request, response) => {
     }
 
     return response.status(200).json({
+      id: wordnett.id,
       wordnett: wordnett.wordnett,
       solutions: wordnett.solutions,
-      max_points: wordnett.max_points,
-      max_words: wordnett.solutions.length,
-    } as Omit<WordnettType, "id" | "createdAt">);
+      maxPoints: wordnett.max_points,
+      maxWords: wordnett.solutions.length,
+    } as Omit<WordnettType, "createdAt">);
   } catch (error) {
     console.error(`something went wrong ${error}`);
     response.status(500).json();

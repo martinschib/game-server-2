@@ -6,7 +6,7 @@ export type WordnettType = {
   wordnett: string;
   solutions: string[];
   createdAt: string;
-  max_points: number;
+  maxPoints: number;
 };
 
 async function create(
@@ -29,7 +29,7 @@ async function find(id: number) {
   if (rows.length !== 1) {
     return null;
   }
-  return rows[0] as WordnettType;
+  return rows[0];
 }
 
 async function remove(id: number) {

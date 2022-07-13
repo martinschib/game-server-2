@@ -1,9 +1,9 @@
-import sql from "sql-template-strings";
-import db from "./db";
+const sql = require('sql-template-strings');
+const db = require('./db');
 
 const ensureMigrationsTable = (db) =>
   db.query(
-    "CREATE TABLE IF NOT EXISTS migrations (id integer PRIMARY KEY, data jsonb NOT NULL)"
+    'CREATE TABLE IF NOT EXISTS migrations (id integer PRIMARY KEY, data jsonb NOT NULL)'
   );
 
 const postgresStateStorage = {
@@ -12,11 +12,11 @@ const postgresStateStorage = {
 
     await ensureMigrationsTable(db);
     // Load the single row of migration data from the database
-    const { rows } = await db.query("SELECT data FROM migrations");
+    const {rows} = await db.query('SELECT data FROM migrations');
 
     if (rows.length !== 1) {
       console.log(
-        "Cannot read migrations from database. If this is the first time you run migrations, then this is normal."
+        'Cannot read migrations from database. If this is the first time you run migrations, then this is normal.'
       );
 
       return fn(null, {});
@@ -34,7 +34,7 @@ const postgresStateStorage = {
 
     const migrationMetaData = {
       lastRun: set.lastRun,
-      migrations: set.migrations,
+      migrations: set.migrations
     };
 
     await db.query(sql`
@@ -44,9 +44,9 @@ const postgresStateStorage = {
     `);
 
     fn();
-  },
+  }
 };
 
-export default Object.assign(() => {
+module.exports = Object.assign(() => {
   return postgresStateStorage;
 }, postgresStateStorage);
