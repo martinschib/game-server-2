@@ -1,9 +1,8 @@
-const express = require("express");
+import express from "express";
 
-const { Router } = express;
-const router = new Router();
+const router = express.Router();
 
-const wordnett = require("./wordnett");
+import wordnett from "./wordnett"
 
 router.use("/api/wordnett", wordnett);
 
