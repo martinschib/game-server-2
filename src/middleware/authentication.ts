@@ -5,15 +5,8 @@ export const authenticationMiddleware = async (
   response: Response,
   next: NextFunction
 ) => {
-  const userId = request.headers["userid"];
-
-  if (typeof userId !== "string") {
-    return response.status(401).json({
-      message: "You must be authenticated.",
-    });
-  }
-
-  if (userId !== process.env.PASSWORD) {
+  const token = request.get("Wordnett-Token");
+  if (token !== process.env.PASSWORD) {
     return response.status(401).json({
       message: "You must be authenticated.",
     });

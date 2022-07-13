@@ -29,10 +29,10 @@ router.post("/", authenticationMiddleware, async (request, response) => {
   }
 });
 
-router.get("/", async (request, response) => {
+router.get("/:id", async (request, response) => {
   try {
-    const { id } = request.body;
-    if (!id || typeof id != "number") {
+    const id: string = request.params.id
+    if (!id) {
       return response
         .status(400)
         .json({ message: "A valid id must be provided" });
@@ -49,7 +49,7 @@ router.get("/", async (request, response) => {
       id: wordnett.id,
       wordnett: wordnett.wordnett,
       solutions: wordnett.solutions,
-      maxPoints: wordnett.max_points,
+      maxScore: wordnett.max_points,
       maxWords: wordnett.solutions.length,
     } as Omit<WordnettType, "createdAt">);
   } catch (error) {

@@ -6,7 +6,7 @@ export type WordnettType = {
   wordnett: string;
   solutions: string[];
   createdAt: string;
-  maxPoints: number;
+  maxScore: number;
 };
 
 async function create(
