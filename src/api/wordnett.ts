@@ -1,25 +1,29 @@
-import express from "express";
-import { authenticationMiddleware } from "../middleware/authentication";
-import Wordnett, { WordnettType } from "../persistence/wordnetts";
-import { getMaxPoints } from "../utils/word";
+import express from 'express';
+import { authenticationMiddleware } from '../middleware/authentication';
+import { createWordnett, findWordnett, WordnettType } from '../persistence/wordnetts';
+import { getMaxPoints } from '../utils/word';
 
-const router = express.Router();
+type WordnettPostType = {
+  wordnett: string;
+  solutions: string[];
+};
 
-router.post("/", authenticationMiddleware, async (request, response) => {
+export const wordnettRouter = express.Router();
+
+wordnettRouter.post('/', authenticationMiddleware, async (request, response) => {
   try {
-    const { wordnett, solutions }: { wordnett: string; solutions: string[] } =
-      request.body;
+    const { wordnett, solutions }: WordnettPostType = request.body;
 
     if (!wordnett || !solutions) {
       return response.status(400).json({
-        message: "wordnett and solutions must be provided",
+        message: 'wordnett and solutions must be provided',
       });
     }
 
-    const wordnettId = await Wordnett.create(
+    const wordnettId = await createWordnett(
       wordnett,
       getMaxPoints(solutions),
-      solutions
+      solutions,
     );
 
     return response.status(200).json(wordnettId);
@@ -29,20 +33,20 @@ router.post("/", authenticationMiddleware, async (request, response) => {
   }
 });
 
-router.get("/:id", async (request, response) => {
+wordnettRouter.get('/:id', async (request, response) => {
   try {
-    const id: string = request.params.id
-    if (!id) {
+    const id: string = request.params.id;
+    if (!id || isNaN(Number(id))) {
       return response
         .status(400)
-        .json({ message: "A valid id must be provided" });
+        .json({ message: 'A valid id must be provided' });
     }
 
-    const wordnett = await Wordnett.find(id);
+    const wordnett = await findWordnett(parseInt(id) || 1);
     if (!wordnett) {
       return response
         .status(400)
-        .json({ message: "We could not find your wordnett" });
+        .json({ message: 'We could not find your wordnett' });
     }
 
     return response.status(200).json({
@@ -51,11 +55,10 @@ router.get("/:id", async (request, response) => {
       solutions: wordnett.solutions,
       maxScore: wordnett.max_points,
       maxWords: wordnett.solutions.length,
-    } as Omit<WordnettType, "createdAt">);
+    } as Omit<WordnettType, 'createdAt'>);
   } catch (error) {
     console.error(`something went wrong ${error}`);
     response.status(500).json();
   }
 });
 
-export default router;

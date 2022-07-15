@@ -9,20 +9,20 @@ export type WordnettType = {
   maxScore: number;
 };
 
-async function create(
+export async function createWordnett(
   wordnett: string,
-  max_points: number,
+  maxScore: number,
   solutions: string[]
 ) {
   const { rows } = await db.query(sql`
   INSERT INTO wordnetts (wordnett, max_points, solutions)
-    VALUES (${wordnett}, ${max_points}, ${solutions})
+    VALUES (${wordnett}, ${maxScore}, ${solutions})
     RETURNING id;
   `);
   return rows[0].id as number;
 }
 
-async function find(id: number) {
+export async function findWordnett(id: number) {
   const { rows } = await db.query(sql`
   SELECT * FROM wordnetts WHERE id = ${id};
   `);
@@ -32,10 +32,9 @@ async function find(id: number) {
   return rows[0];
 }
 
-async function remove(id: number) {
+export async function removeWordnett(id: number) {
   await db.query(sql`
   DELETE FROM wordnetts WHERE id = ${id};
   `);
 }
 
-export default { create, find, remove };

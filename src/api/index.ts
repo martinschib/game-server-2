@@ -1,9 +1,6 @@
-import express from "express";
+import express from 'express';
+import { wordnettRouter } from './wordnett';
 
-const router = express.Router();
+export const apiRouter = express.Router();
 
-import wordnett from "./wordnett";
-
-router.use("/api/wordnetts", wordnett);
-
-export default router;
+apiRouter.use('/api/wordnetts', wordnettRouter);
