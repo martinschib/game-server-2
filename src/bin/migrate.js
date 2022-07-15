@@ -1,9 +1,9 @@
 const path = require('path');
 const migrate = require('migrate');
 
-const stateStore = require('../src/persistence/postgres-state-storage');
+const stateStore = require('../persistence/postgres-state-storage');
 
-const migrationsDirectory = path.resolve(__dirname, '../src/migrations');
+const migrationsDirectory = path.resolve(__dirname, '../migrations');
 
 const [command] = process.argv.slice(2);
 
